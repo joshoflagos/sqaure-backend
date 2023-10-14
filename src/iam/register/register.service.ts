@@ -132,7 +132,7 @@ export class RegisterService {
     
         
         <p>COO,<br>
-        Joshua Neonatar<br>
+        Reuben Igba<br>
         </p>
 <p/>
 <hr/>
