@@ -41,10 +41,10 @@ export class ManagerService {
           createManagerDto.organizer_user = getUser;
           createManagerDto.auth_link =
             this.checkincheckoutTokenService.generateRandomString(6);
-          console.log(
-            'http://localhost:3000/crm/managers/auth/${createManagerDto.auth_link}',
-            `http://localhost:3000/crm/managers/auth/${createManagerDto.auth_link}`,
-          );
+          // console.log(
+          //   'http://localhost:3000/crm/managers/auth/${createManagerDto.auth_link}',
+          //   `http://localhost:3000/crm/managers/auth/${createManagerDto.auth_link}`,
+          // );
 
           const html = `
         <!DOCTYPE html>
@@ -67,7 +67,7 @@ export class ManagerService {
       
           <p><b>To log in to your account, please click on the following link:</b></p>
           <ul>
-          <li> <a href=${`http://localhost:3000/crm/managers/auth/${createManagerDto.auth_link}`}>Click to Login</a></li>
+          <li> <a href=${`https://square-inky.vercel.app/crm/managers/auth/${createManagerDto.auth_link}`}>Click to Login</a></li>
           
   </ul>
       
