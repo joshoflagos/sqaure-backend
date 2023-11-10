@@ -1,4 +1,4 @@
-import { Manager } from 'src/manager/entities/manager.entity';
+import { Team } from 'src/team/entities/team.entity';
 import { OrganizerUser } from 'src/organizer-user/entities/organizer-user.entity';
 import { Organizer } from 'src/organizer/entities/organizer.entity';
 import {
@@ -17,11 +17,12 @@ import {
 export class Programme {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @Column()
-  full_name: string;
-  @Column()
-  description: string;
+  @Column({nullable:true})
+  presence_type: string;
+  @Column({nullable:true})
+  name: string;
+  @Column({nullable:true})
+  work_order_id: string;
   @Column()
   start_date: string;
   @Column()
@@ -29,25 +30,28 @@ export class Programme {
   @Column({ nullable: true, default: 0 })
   participant_allowance: string;
   @Column({ nullable: true, default: 0 })
-  manager_allowance: string;
+  participant_airtime: string;
   @Column({ nullable: true, default: 0 })
   participant_rate: string;
   @Column({ nullable: true, default: 0 })
   participant_distance: string;
-  @Column({ nullable: true, default: 0 })
-  manager_rate: string;
-  @Column({ nullable: true, default: 0 })
-  manager_distance: string;
+
   @Column()
   venue: string;
   @Column({ nullable: true })
-  event_image_url: string;
+  event_attachement_programme: string;
   @Column({ nullable: true })
-  attachement_programme: string;
+  agenda_attachement_programme: string;
+  @Column({ nullable: true })
+  budget_attachement_programme: string;
+  @Column({ nullable: true })
+  other_attachement_programme: string;
 
-  @ManyToMany(() => Manager, (manager) => manager)
+
+
+  @ManyToMany(() => Team, (team) => team)
   @JoinTable()
-  manager: Manager[];
+  team: Team[];
   @ManyToMany(() => Organizer, (organizer) => organizer)
   @JoinTable()
   organizer: Organizer[];

@@ -5,28 +5,28 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateManagerUserDto } from './dto/create-manager-user.dto';
-import { UpdateManagerUserDto } from './dto/update-manager-user.dto';
+import { CreateTeamUserDto } from './dto/create-team-user.dto';
+import { UpdateTeamUserDto } from './dto/update-team-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { HashingService } from 'src/shared/hashing/hashing.service';
 import { Repository, UpdateResult } from 'typeorm';
-import { ManagerUser } from './entities/manager-user.entity';
-import { IManagerUsers } from './interfaces/manager-user.interface';
-import { ManagerUserProfileDto } from './dto/manager-user-profile.dto';
+import { TeamUser } from './entities/team-user.entity';
+import { ITeamUsers } from './interfaces/team-user.interface';
+import { TeamUserProfileDto } from './dto/team-user-profile.dto';
 
 @Injectable()
-export class ManagerUserService {
+export class TeamUserService {
   constructor(
-    @InjectRepository(ManagerUser)
-    private readonly userRepository: Repository<ManagerUser>,
+    @InjectRepository(TeamUser)
+    private readonly userRepository: Repository<TeamUser>,
     private readonly hashingService: HashingService,
   ) {}
 
-  public async findAll(): Promise<ManagerUser[]> {
+  public async findAll(): Promise<TeamUser[]> {
     return await this.userRepository.find();
   }
 
-  public async findByEmail(email: string): Promise<ManagerUser> {
+  public async findByEmail(email: string): Promise<TeamUser> {
     const passenger = await this.userRepository.findOneBy({
       email: email,
     });
@@ -38,7 +38,7 @@ export class ManagerUserService {
     return passenger;
   }
 
-  public async findBySub(sub: string): Promise<ManagerUser> {
+  public async findBySub(sub: string): Promise<TeamUser> {
     const passenger = await this.userRepository.findOneByOrFail({
       id: sub,
     });
@@ -50,7 +50,7 @@ export class ManagerUserService {
     return passenger;
   }
 
-  public async findById(userId: string): Promise<ManagerUser> {
+  public async findById(userId: string): Promise<TeamUser> {
     const passenger = await this.userRepository.findOneBy({
       id: userId,
     });
@@ -62,7 +62,7 @@ export class ManagerUserService {
     return passenger;
   }
 
-  public async create(userDto: UpdateManagerUserDto): Promise<IManagerUsers> {
+  public async create(userDto: UpdateTeamUserDto): Promise<ITeamUsers> {
     try {
       return await this.userRepository.save(userDto);
     } catch (err) {
@@ -70,7 +70,7 @@ export class ManagerUserService {
     }
   }
 
-  public async updateByEmail(email: string): Promise<ManagerUser> {
+  public async updateByEmail(email: string): Promise<TeamUser> {
     try {
       const passenger = await this.userRepository.findOneBy({ email: email });
       passenger.password = await this.hashingService.hash(
@@ -86,7 +86,7 @@ export class ManagerUserService {
   public async updateByPassword(
     reset_token: string,
     password: string,
-  ): Promise<ManagerUser> {
+  ): Promise<TeamUser> {
     try {
       const passenger = await this.userRepository.findOneBy({
         reset_token: reset_token,
@@ -101,8 +101,8 @@ export class ManagerUserService {
 
   public async updateProfilePassenger(
     id: string,
-    userProfileDto: ManagerUserProfileDto,
-  ): Promise<ManagerUser> {
+    userProfileDto: TeamUserProfileDto,
+  ): Promise<TeamUser> {
     try {
       const passenger = await this.userRepository.findOneBy({ id: id });
       passenger.email = userProfileDto.email;
@@ -114,7 +114,7 @@ export class ManagerUserService {
 
   public async updatePassenger(
     id: string,
-    userUpdateDto: UpdateManagerUserDto,
+    userUpdateDto: UpdateTeamUserDto,
   ): Promise<UpdateResult> {
     try {
       const passenger = await this.userRepository.update(

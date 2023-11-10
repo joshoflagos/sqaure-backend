@@ -4,7 +4,7 @@ import { RegisterService } from './register.service';
 import { UsersService } from '../../users/users.service';
 import { MailerService } from '../../shared/mailer/mailer.service';
 import { ConfigService } from '@nestjs/config';
-import { RegisterUserDto } from './dto/register-manager-user.dto';
+import { RegisterUserDto } from './dto/register-team-user.dto';
 import { BadRequestException } from '@nestjs/common';
 
 const registerUserDto: RegisterUserDto = {

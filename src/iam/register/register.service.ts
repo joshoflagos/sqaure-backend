@@ -4,22 +4,23 @@ import { MailerService } from 'src/shared/mailer/mailer.service';
 import { IOrganizerUsers } from 'src/organizer-user/interfaces/organizer-users.interface';
 import { RegisterOrganizerUserDto } from './dto/register-organizer-user.dto';
 import { OrganizerUserService } from 'src/organizer-user/organizer-user.service';
-import { IManagerUsers } from 'src/manager-user/interfaces/manager-user.interface';
-import { ManagerUserService } from 'src/manager-user/manager-user.service';
-import { RegisterManagerUserDto } from './dto/register-manager-user.dto';
+import { ITeamUsers } from 'src/team-user/interfaces/team-user.interface';
+import { TeamUserService } from 'src/team-user/team-user.service';
+import { RegisterTeamUserDto } from './dto/register-team-user.dto';
+
 
 @Injectable()
 export class RegisterService {
   constructor(
-    private readonly managerUserService: ManagerUserService,
+    private readonly TeamUserService: TeamUserService,
     private readonly OrganizerUsersService: OrganizerUserService,
     private readonly hashingService: HashingService,
     private readonly mailerService: MailerService,
   ) {}
 
   public async register(
-    registerPassengerDto: RegisterManagerUserDto,
-  ): Promise<IManagerUsers> {
+    registerPassengerDto: RegisterTeamUserDto,
+  ): Promise<ITeamUsers> {
     registerPassengerDto.password = await this.hashingService.hash(
       registerPassengerDto.password,
     );
@@ -73,14 +74,14 @@ export class RegisterService {
       </body>
       </html>
       `;
-    // return this.managerUserService.create(registerPassengerDto);
+    // return this.TeamUserService.create(registerPassengerDto);
 
     const options = {
       email: registerPassengerDto.email,
       subject: 'Welcome to Drop',
       html: html,
     };
-    const user = this.managerUserService.create(registerPassengerDto);
+    const user = this.TeamUserService.create(registerPassengerDto);
     await this.mailerService.sendMail(options);
     return user;
   }
@@ -106,7 +107,7 @@ export class RegisterService {
     
         <p>Welcome to Square CRM for Oganizations </p>
     
-        <p><strong> We help organisations plan and manage their programmes, managers, participants, attendance, travel and spend records.</strong>
+        <p><strong> We help organisations plan and manage their programmes, Teams, participants, attendance, travel and spend records.</strong>
         </p>
         <p>We help organization manage programmes sponsors, participant, travel and spend record 
         </p>
@@ -116,7 +117,7 @@ export class RegisterService {
         <li> Signup and Login</li>
         <li> Create organisations. 
 </li>
-<li> Create managers. 
+<li> Create Teams. 
 </li>
 <li> Create programme. 
 </li>

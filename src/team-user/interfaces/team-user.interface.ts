@@ -1,4 +1,4 @@
-export interface IManagerUsers {
+export interface ITeamUsers {
   readonly id: string;
   readonly email: string;
   readonly full_name: string;

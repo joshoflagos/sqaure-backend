@@ -38,9 +38,9 @@ export class ProgrammeController {
     return this.programmeService.findAllByUserId(id);
   }
   @AuthGuard(AuthType.None)
-  @Get('/manager/:id')
-  findAllByManagerId(@Param('id') id: string) {
-    return this.programmeService.findAllByManagerId(id);
+  @Get('/team/:id')
+  findAllByTeamId(@Param('id') id: string) {
+    return this.programmeService.findAllByTeamId(id);
   }
 
   @Patch(':id')

@@ -15,14 +15,14 @@ import { OrganizerUserService } from 'src/organizer-user/organizer-user.service'
 import { LoginDto, LoginOrganizerUserDto } from './dto/login.dto';
 import { IOrganizerUsers } from 'src/organizer-user/interfaces/organizer-users.interface';
 import { OrganizerUser } from 'src/organizer-user/entities/organizer-user.entity';
-import { ManagerUserService } from 'src/manager-user/manager-user.service';
-import { IManagerUsers } from 'src/manager-user/interfaces/manager-user.interface';
-import { ManagerUser } from 'src/manager-user/entities/manager-user.entity';
+import { TeamUserService } from 'src/team-user/team-user.service';
+import { ITeamUsers } from 'src/team-user/interfaces/team-user.interface';
+import { TeamUser } from 'src/team-user/entities/team-user.entity';
 
 @Injectable()
 export class LoginService {
   constructor(
-    private readonly usersService: ManagerUserService,
+    private readonly usersService: TeamUserService,
     private readonly OrganizerUsersService: OrganizerUserService,
     private readonly jwtService: JwtService,
     @Inject(jwtConfig.KEY)
@@ -30,7 +30,7 @@ export class LoginService {
     private readonly hashingService: HashingService,
   ) {}
 
-  public async findUserByEmail(loginDto: LoginDto): Promise<IManagerUsers> {
+  public async findUserByEmail(loginDto: LoginDto): Promise<ITeamUsers> {
     return await this.usersService.findByEmail(loginDto.email.toLowerCase());
   }
 
@@ -58,7 +58,7 @@ export class LoginService {
     }
   }
 
-  async generateTokens(user: ManagerUser) {
+  async generateTokens(user: TeamUser) {
     const [accessToken, refreshToken] = await Promise.all([
       this.signToken<Partial<JWTPayload>>(
         user.id,

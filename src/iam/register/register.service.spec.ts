@@ -3,7 +3,7 @@ import { UsersService } from '../../users/users.service';
 import { RegisterService } from './register.service';
 import { Users } from '../../users/entities/users.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { RegisterUserDto } from './dto/register-manager-user.dto';
+import { RegisterUserDto } from './dto/register-team-user.dto';
 import { HashingService } from '../../shared/hashing/hashing.service';
 import { MailerService } from '../../shared/mailer/mailer.service';
 import { ConfigService } from '@nestjs/config';

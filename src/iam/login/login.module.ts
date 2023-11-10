@@ -13,12 +13,12 @@ import jwtConfig from './config/jwt.config';
 import { OrganizerUser } from 'src/organizer-user/entities/organizer-user.entity';
 import { OrganizerUserModule } from 'src/organizer-user/organizer-user.module';
 import { OrganizerUserService } from 'src/organizer-user/organizer-user.service';
-import { ManagerUserService } from 'src/manager-user/manager-user.service';
-import { ManagerUser } from 'src/manager-user/entities/manager-user.entity';
+import { TeamUserService } from 'src/team-user/team-user.service';
+import { TeamUser } from 'src/team-user/entities/team-user.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([OrganizerUser, ManagerUser]),
+    TypeOrmModule.forFeature([OrganizerUser, TeamUser]),
     ConfigModule.forFeature(jwtConfig),
     JwtModule.registerAsync(jwtConfig.asProvider()),
   ],
@@ -34,7 +34,7 @@ import { ManagerUser } from 'src/manager-user/entities/manager-user.entity';
     AccessTokenGuard,
     LoginService,
     OrganizerUserService,
-    ManagerUserService,
+    TeamUserService,
   ],
   controllers: [LoginController],
 })

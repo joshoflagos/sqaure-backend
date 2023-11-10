@@ -4,7 +4,7 @@ import { UpdateProgrammeDto } from './dto/update-programme.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Programme } from './entities/programme.entity';
 import { In, Repository } from 'typeorm';
-import { ManagerService } from '../manager/manager.service';
+import { TeamService } from '../team/team.service';
 import { OrganizerService } from 'src/organizer/organizer.service';
 import { OrganizerUserService } from 'src/organizer-user/organizer-user.service';
 import { Participant } from 'src/participant/entities/participant.entity';
@@ -16,7 +16,7 @@ export class ProgrammeService {
     private readonly programmeRepository: Repository<Programme>,
     @InjectRepository(Participant)
     private readonly participantRepository: Repository<Participant>,
-    private readonly managerService: ManagerService,
+    private readonly TeamService: TeamService,
     private readonly organizerService: OrganizerService,
     private readonly organizerUserService: OrganizerUserService,
   ) {}
@@ -29,12 +29,12 @@ export class ProgrammeService {
       if (!getUser) {
         throw new HttpException('No user available', HttpStatus.BAD_REQUEST);
       } else {
-        const getManager = await this.managerService.findByIds(
-          createProgrammeDto.manager,
+        const getTeam = await this.TeamService.findByIds(
+          createProgrammeDto.team,
         );
-        if (!getManager) {
+        if (!getTeam) {
           throw new HttpException(
-            'Unable to get manager data',
+            'Unable to get team data',
             HttpStatus.BAD_REQUEST,
           );
         } else {
@@ -43,19 +43,19 @@ export class ProgrammeService {
           );
           if (!getOrganizer) {
             throw new HttpException(
-              'Unable to get manager data',
+              'Unable to get team data',
               HttpStatus.BAD_REQUEST,
             );
           } else {
             createProgrammeDto.organizer_user = getUser;
             createProgrammeDto.organizer = getOrganizer;
-            createProgrammeDto.manager = getManager;
+            createProgrammeDto.team = getTeam;
             const create = this.programmeRepository.create(createProgrammeDto);
             const savetoDb = await this.programmeRepository.save(create);
 
             if (!savetoDb) {
               throw new HttpException(
-                'Unable to save manager data',
+                'Unable to save team data',
                 HttpStatus.BAD_REQUEST,
               );
             } else {
@@ -95,7 +95,7 @@ export class ProgrammeService {
     try {
       const getall = await this.programmeRepository.find({
         where: { organizer_user: { id: userId } },
-        relations: { organizer_user: true, organizer: true, manager: true },
+        relations: { organizer_user: true, organizer: true, team: true },
         order: { created_at: 'DESC' },
       });
 
@@ -113,7 +113,7 @@ export class ProgrammeService {
         // console.log({ counts });
 
         // const count = await this.countParticipant(programIds);
-        return { getall, counts };
+        return { getall, counts }; 
       }
     } catch (error) {
       // console.log({ error });
@@ -121,13 +121,13 @@ export class ProgrammeService {
       throw new HttpException(error, HttpStatus.BAD_REQUEST);
     }
   }
-  async findAllByManagerId(userId: string) {
+  async findAllByTeamId(userId: string) {
     try {
       const getall = await this.programmeRepository.find({
-        // where: { manager: { id: userId } },
+        // where: { team: { id: userId } },
         // where: { id: In([1, 2, 3]) },
-        where: { manager: { id: In([userId]) } },
-        relations: { organizer_user: true, organizer: true, manager: true },
+        where: { team: { id: In([userId]) } },
+        relations: { organizer_user: true, organizer: true, team: true },
         order: { created_at: 'DESC' },
       });
 
@@ -158,13 +158,13 @@ export class ProgrammeService {
     try {
       if (id == null || id == undefined) {
         throw new HttpException(
-          `No manager id found ${id}`,
+          `No team id found ${id}`,
           HttpStatus.BAD_REQUEST,
         );
       } else {
         const getOne = await this.programmeRepository.findOne({
           where: { id },
-          relations: { organizer_user: true },
+          relations: { organizer_user: true,team:true },
         });
         // console.log({ getOne });
 
@@ -184,7 +184,7 @@ export class ProgrammeService {
     try {
       if (id == null || id == undefined) {
         throw new HttpException(
-          `No manager id found ${id}`,
+          `No team id found ${id}`,
           HttpStatus.BAD_REQUEST,
         );
       } else {
@@ -250,7 +250,7 @@ export class ProgrammeService {
       } else {
         const getExistingData = await this.programmeRepository.findOne({
           where: { id },
-          relations: ['organizer', 'manager'],
+          relations: ['organizer', 'team'],
         });
         if (!getExistingData && getExistingData == null) {
           throw new HttpException(
@@ -267,20 +267,20 @@ export class ProgrammeService {
           //  getExistingData.end_date = updateProgrammeDto.end_date;
           //  getExistingData.participant_allowance =
           //    updateProgrammeDto.participant_allowance;
-          //  getExistingData.manager_allowance =
-          //    updateProgrammeDto.manager_allowance;
+          //  getExistingData.Team_allowance =
+          //    updateProgrammeDto.Team_allowance;
           //  getExistingData.participant_rate =
           //    updateProgrammeDto.participant_rate;
           //  getExistingData.participant_distance =
           //    updateProgrammeDto.participant_distance;
-          //  getExistingData.manager_rate = updateProgrammeDto.manager_rate;
-          //  getExistingData.manager_distance =
-          //    updateProgrammeDto.manager_distance;
+          //  getExistingData.Team_rate = updateProgrammeDto.Team_rate;
+          //  getExistingData.Team_distance =
+          //    updateProgrammeDto.Team_distance;
           //  getExistingData.venue = updateProgrammeDto.venue;
           //  getExistingData.event_image_url = updateProgrammeDto.event_image_url;
           //  getExistingData.attachement_programme =
           //    updateProgrammeDto.attachement_programme;
-          //  getExistingData.manager = updateProgrammeDto.manager;
+          //  getExistingData.team = updateProgrammeDto.team;
           //  getExistingData.organizer = updateProgrammeDto.organizer;
           //  getExistingData.organizer_user;
           const updateData = await this.programmeRepository.update(
@@ -296,7 +296,7 @@ export class ProgrammeService {
             );
           } else {
             const responseData = {
-              message: 'Manager updated successfully',
+              message: 'Team updated successfully',
               data: updateData,
             };
             return responseData;
@@ -338,7 +338,7 @@ export class ProgrammeService {
             );
           } else {
             const responseData = {
-              message: 'Manager   deleted successfully',
+              message: 'Team   deleted successfully',
               data: deleteData,
             };
             return responseData;

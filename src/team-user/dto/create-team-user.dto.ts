@@ -7,7 +7,7 @@ import {
   MaxLength,
 } from 'class-validator';
 
-export class CreateManagerUserDto {
+export class CreateTeamUserDto {
   @IsEmail()
   @IsString()
   @IsNotEmpty()

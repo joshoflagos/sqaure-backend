@@ -1,21 +1,21 @@
 import { Module } from '@nestjs/common';
-import { ManagerService } from './manager.service';
-import { ManagerController } from './manager.controller';
+import { TeamService } from './team.service';
+import { TeamController } from './team.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Manager } from './entities/manager.entity';
+import { Team } from './entities/team.entity';
 import { OrganizerUserModule } from 'src/organizer-user/organizer-user.module';
 import { MailerModule } from 'src/shared/mailer/mailer.module';
 import { CheckincheckoutTokenModule } from 'src/checkincheckout-token/checkincheckout-token.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Manager]),
+    TypeOrmModule.forFeature([Team]),
     OrganizerUserModule,
     MailerModule,
     CheckincheckoutTokenModule,
   ],
-  controllers: [ManagerController],
-  providers: [ManagerService],
-  exports: [ManagerService],
+  controllers: [TeamController],
+  providers: [TeamService],
+  exports: [TeamService],
 })
-export class ManagerModule {}
+export class TeamModule {}

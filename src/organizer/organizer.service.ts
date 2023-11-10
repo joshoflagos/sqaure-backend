@@ -100,7 +100,7 @@ export class OrganizerService {
     try {
       if (id == null || id == undefined) {
         throw new HttpException(
-          `No manager id found ${id}`,
+          `No team id found ${id}`,
           HttpStatus.BAD_REQUEST,
         );
       } else {
@@ -126,7 +126,7 @@ export class OrganizerService {
     try {
       if (id == null || id == undefined) {
         throw new HttpException(
-          `No manager id found ${id}`,
+          `No team id found ${id}`,
           HttpStatus.BAD_REQUEST,
         );
       } else {
@@ -179,7 +179,7 @@ export class OrganizerService {
             );
           } else {
             const responseData = {
-              message: 'Manager updated successfully',
+              message: 'Team updated successfully',
               data: updateData,
             };
             return responseData;
@@ -221,7 +221,7 @@ export class OrganizerService {
             );
           } else {
             const responseData = {
-              message: 'Manager   deleted successfully',
+              message: 'Team   deleted successfully',
               data: deleteData,
             };
             return responseData;

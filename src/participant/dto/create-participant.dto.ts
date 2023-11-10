@@ -7,62 +7,43 @@ import {
 } from 'class-validator';
 
 export class CreateParticipantDto {
-  @IsString()
-  @IsNotEmpty()
-  dob: string;
-  @IsString()
-  @IsNotEmpty()
-  gender: string;
-  @IsString()
   @IsOptional()
-  event_image_url: string;
-  @IsString()
-  @IsNotEmpty()
-  first_name: string;
-  @IsString()
-  @IsOptional()
-  middle_name: string;
-  @IsString()
-  @IsNotEmpty()
-  last_name: string;
-  @IsString()
-  @IsNotEmpty()
-  email: string;
+  reg_selfie: string;
 
-  @IsString()
   @IsOptional()
-  phone_number2: string;
-  @IsBoolean()
+  title: string;
   @IsOptional()
-  isCheck_in: boolean;
-  @IsBoolean()
+  surname: string;
   @IsOptional()
-  isCheck_out: boolean;
-  @IsNumber()
+  firstname: string;
   @IsOptional()
-  check_out: number;
-  @IsNumber()
+  lastname: string;
+  @IsOptional()
+  gender: string;
+  @IsOptional()
+  email: string;
+  @IsOptional()
+  phone_1: string;
+  @IsOptional()
+  phone_2: string;
+
+  @IsOptional()
+  bank_account_name: string;
+
+  @IsOptional()
+  bank_account_number: string;
+
   @IsOptional()
   check_in: number;
-  @IsString()
-  @IsNotEmpty()
-  nin: string;
-  @IsString()
-  @IsNotEmpty()
-  bvn: string;
-  @IsString()
-  @IsNotEmpty()
-  address: string;
-  @IsString()
-  @IsNotEmpty()
-  place: string;
-  @IsString()
-  @IsNotEmpty()
-  phone_number: string;
-  @IsNotEmpty()
+
+  @IsOptional()
+  check_out: number;
+
+  @IsOptional()
+  bank_name: string;
+  @IsOptional()
+  organization: string;
+
+  @IsOptional()
   programme: any;
-  @IsOptional()
-  manager: any;
-  @IsOptional()
-  organizer_user: any;
 }

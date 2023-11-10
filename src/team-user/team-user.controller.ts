@@ -11,36 +11,36 @@ import {
   NotFoundException,
   Put,
 } from '@nestjs/common';
-import { ManagerUserService } from './manager-user.service';
-import { CreateManagerUserDto } from './dto/create-manager-user.dto';
-import { UpdateManagerUserDto } from './dto/update-manager-user.dto';
-import { ManagerUserProfileDto } from './dto/manager-user-profile.dto';
-import { IManagerUsers } from './interfaces/manager-user.interface';
+import { TeamUserService } from './team-user.service';
+import { CreateTeamUserDto } from './dto/create-team-user.dto';
+import { UpdateTeamUserDto } from './dto/update-team-user.dto';
+import { TeamUserProfileDto } from './dto/team-user-profile.dto';
+import { ITeamUsers } from './interfaces/team-user.interface';
 
-@Controller('manager-user')
-export class ManagerUserController {
-  constructor(private readonly managerUserService: ManagerUserService) {}
+@Controller('team-user')
+export class TeamUserController {
+  constructor(private readonly TeamUserService: TeamUserService) {}
 
   @Post()
-  create(@Body() createManagerUserDto: CreateManagerUserDto) {
-    return this.managerUserService.create(createManagerUserDto);
+  create(@Body() createTeamUserDto: CreateTeamUserDto) {
+    return this.TeamUserService.create(createTeamUserDto);
   }
 
   @Get()
   findAll() {
-    return this.managerUserService.findAll();
+    return this.TeamUserService.findAll();
   }
 
   @Get()
-  public async findAllPassenger(): Promise<IManagerUsers[]> {
-    return this.managerUserService.findAll();
+  public async findAllPassenger(): Promise<ITeamUsers[]> {
+    return this.TeamUserService.findAll();
   }
 
   @Get('/:userId')
   public async findOnePassenger(
     @Param('userId') userId: string,
-  ): Promise<IManagerUsers> {
-    return this.managerUserService.findById(userId);
+  ): Promise<ITeamUsers> {
+    return this.TeamUserService.findById(userId);
   }
 
   @Get('/:userId/profile')
@@ -60,10 +60,10 @@ export class ManagerUserController {
   @Put('/:userId/profile')
   public async updateProfilePassenger(
     @Param('userId') userId: string,
-    @Body() userProfileDto: ManagerUserProfileDto,
+    @Body() userProfileDto: TeamUserProfileDto,
   ): Promise<any> {
     try {
-      await this.managerUserService.updateProfilePassenger(
+      await this.TeamUserService.updateProfilePassenger(
         userId,
         userProfileDto,
       );
@@ -80,10 +80,10 @@ export class ManagerUserController {
   @Put('/:userId')
   public async updatePassenger(
     @Param('userId') userId: string,
-    @Body() userUpdateDto: UpdateManagerUserDto,
+    @Body() userUpdateDto: UpdateTeamUserDto,
   ) {
     try {
-      await this.managerUserService.updatePassenger(userId, userUpdateDto);
+      await this.TeamUserService.updatePassenger(userId, userUpdateDto);
 
       return {
         message: 'passenger Updated successfully!',
@@ -98,7 +98,7 @@ export class ManagerUserController {
   //   @Body() uploadProfilePicDto: PassengerUploadProfilePicDto,
   // ) {
   //   try {
-  //     await this.managerUserService.uploadImage(uploadProfilePicDto);
+  //     await this.TeamUserService.uploadImage(uploadProfilePicDto);
   //   } catch (err) {
   //     throw new BadRequestException(err, 'Error: passenger not updated!');
   //   }
@@ -106,6 +106,6 @@ export class ManagerUserController {
 
   @Delete('/:userId')
   public async deletePassenger(@Param('userId') userId: string): Promise<void> {
-    await this.managerUserService.deletePassenger(userId);
+    await this.TeamUserService.deletePassenger(userId);
   }
 }

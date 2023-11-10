@@ -1,35 +1,35 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateManagerDto } from './dto/create-manager.dto';
-import { UpdateManagerDto } from './dto/update-manager.dto';
+import { CreateTeamDto } from './dto/create-team.dto';
+import { UpdateTeamDto } from './dto/update-team.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Manager } from './entities/manager.entity';
+import { Team } from './entities/team.entity';
 import { Repository } from 'typeorm';
 import { OrganizerUserService } from '../organizer-user/organizer-user.service';
 import { CheckincheckoutTokenService } from '../checkincheckout-token/checkincheckout-token.service';
 import { MailerService } from 'src/shared/mailer/mailer.service';
-import { LoginManagerDto } from './dto/login-manager.dto';
+import { LoginTeamDto } from './dto/login-team.dto';
 
 @Injectable()
-export class ManagerService {
+export class TeamService {
   constructor(
-    @InjectRepository(Manager)
-    private readonly managerRepository: Repository<Manager>,
+    @InjectRepository(Team)
+    private readonly TeamRepository: Repository<Team>,
     private readonly organizerUserService: OrganizerUserService,
     private readonly checkincheckoutTokenService: CheckincheckoutTokenService,
     private readonly mailerService: MailerService,
   ) {}
-
-  async create(createManagerDto: CreateManagerDto) {
+ 
+  async create(createTeamDto: CreateTeamDto) {
     try {
       const getUser = await this.organizerUserService.findById(
-        createManagerDto.organizer_user,
+        createTeamDto.organizer_user,
       );
 
       if (!getUser) {
         throw new HttpException('No user available', HttpStatus.BAD_REQUEST);
       } else {
-        const getExistingEmail = await this.managerRepository.findOne({
-          where: { email: createManagerDto.email },
+        const getExistingEmail = await this.TeamRepository.findOne({
+          where: { administrative_assistant_email: createTeamDto.administrative_assistant_email },
         });
 
         if (getExistingEmail) {
@@ -38,12 +38,12 @@ export class ManagerService {
             HttpStatus.BAD_REQUEST,
           );
         } else {
-          createManagerDto.organizer_user = getUser;
-          createManagerDto.auth_link =
+          createTeamDto.organizer_user = getUser;
+          createTeamDto.auth_link =
             this.checkincheckoutTokenService.generateRandomString(6);
           // console.log(
-          //   'http://localhost:3000/crm/managers/auth/${createManagerDto.auth_link}',
-          //   `http://localhost:3000/crm/managers/auth/${createManagerDto.auth_link}`,
+          //   'http://localhost:3000/crm/Teams/auth/${createTeamDto.auth_link}',
+          //   `http://localhost:3000/crm/Teams/auth/${createTeamDto.auth_link}`,
           // );
 
           const html = `
@@ -53,21 +53,21 @@ export class ManagerService {
           <title>Welcome to Square CRM for Oganizations</title>
       </head>
       <body>
-          <p>Hi ${createManagerDto.manager_first_name}   ${
-            createManagerDto.manager_last_name
+          <p>Hi ${createTeamDto.administrative_assistant_first_name}   ${
+            createTeamDto.administrative_assistant_last_name
           },</p>
       
           <p>Welcome to Square CRM for Oganizations </p>
       
-          <p><strong> We help organisations plan and manage their programmes, managers, participants, attendance, travel and spend records.</strong>
+          <p><strong> We help organisations plan and manage their programmes, Teams, participants, attendance, travel and spend records.</strong>
           </p>
           <p>We help organization manage programmes sponsors, participant, travel and spend record 
-          </p>   <p> I have created an account for you on Square CRM as a Manager. You can use this account to access a variety of resources, including adding participant, checking of available programmes.
+          </p>   <p> I have created an account for you on Square CRM as a Team. You can use this account to access a variety of resources, including adding participant, checking of available programmes.
           </p>
       
           <p><b>To log in to your account, please click on the following link:</b></p>
           <ul>
-          <li> <a href=${`https://square-inky.vercel.app/crm/managers/auth/${createManagerDto.auth_link}`}>Click to Login</a></li>
+          <li> <a href=${`https://square-inky.vercel.app/crm/Teams/auth/${createTeamDto.auth_link}`}>Click to Login</a></li>
           
   </ul>
       
@@ -84,17 +84,17 @@ export class ManagerService {
       </html>      
       `;
 
-          const create = this.managerRepository.create(createManagerDto);
-          const savetoDb = await this.managerRepository.save(create);
+          const create = this.TeamRepository.create(createTeamDto);
+          const savetoDb = await this.TeamRepository.save(create);
 
           if (!savetoDb) {
             throw new HttpException(
-              'Unable to save manager data',
+              'Unable to save team data',
               HttpStatus.BAD_REQUEST,
             );
           } else {
             const options = {
-              email: createManagerDto.email,
+              email: createTeamDto.administrative_assistant_email,
               subject: 'Welcome to Square',
               html: html,
             };
@@ -102,7 +102,7 @@ export class ManagerService {
             await this.mailerService.sendMail(options);
 
             const responseData = {
-              message: 'Manager created successfully',
+              message: 'Team created successfully',
               data: savetoDb,
             };
             return responseData;
@@ -118,10 +118,10 @@ export class ManagerService {
     console.log({ auth_link });
 
     try {
-      const getAuthLink = await this.managerRepository.findOne({
+      const getAuthLink = await this.TeamRepository.findOne({
         where: { auth_link: auth_link },
       });
-      console.log({ getAuthLink });
+     
 
       if (!getAuthLink) {
         throw new HttpException(
@@ -143,12 +143,12 @@ export class ManagerService {
   }
   async findByIds(ids: string[]) {
     try {
-      const queryBuilder = this.managerRepository
-        .createQueryBuilder('manager')
+      const queryBuilder = this.TeamRepository
+        .createQueryBuilder('team')
         .whereInIds(ids);
 
       const entities = await queryBuilder.getMany();
-      console.log({ entities });
+    
 
       if (!entities) {
         throw new HttpException('No data available', HttpStatus.BAD_REQUEST);
@@ -162,7 +162,7 @@ export class ManagerService {
 
   async findAll() {
     try {
-      const getall = await this.managerRepository.find({
+      const getall = await this.TeamRepository.find({
         relations: { organizer_user: true },
         order: { created_at: 'DESC' },
       });
@@ -177,7 +177,7 @@ export class ManagerService {
   }
   async findAllByUserId(userId: string) {
     try {
-      const getall = await this.managerRepository.find({
+      const getall = await this.TeamRepository.find({
         where: { organizer_user: { id: userId } },
         relations: { organizer_user: true },
         order: { created_at: 'DESC' },
@@ -196,15 +196,15 @@ export class ManagerService {
     try {
       if (id == null || id == undefined) {
         throw new HttpException(
-          `No manager id found ${id}`,
+          `No team id found ${id}`,
           HttpStatus.BAD_REQUEST,
         );
       } else {
-        const getOne = await this.managerRepository.findOne({
+        const getOne = await this.TeamRepository.findOne({
           where: { id },
           relations: { organizer_user: true },
         });
-        console.log({ getOne });
+
 
         if (!getOne && getOne == null) {
           throw new HttpException(
@@ -222,15 +222,15 @@ export class ManagerService {
     try {
       if (id == null || id == undefined) {
         throw new HttpException(
-          `No manager id found ${id}`,
+          `No team id found ${id}`,
           HttpStatus.BAD_REQUEST,
         );
       } else {
-        const getOne = await this.managerRepository.findOne({
+        const getOne = await this.TeamRepository.findOne({
           where: { id },
           relations: { organizer_user: true },
         });
-        console.log({ getOne });
+  
 
         if (!getOne && getOne == null) {
           throw new HttpException(
@@ -245,7 +245,7 @@ export class ManagerService {
     }
   }
 
-  async update(id: string, updateManagerDto: UpdateManagerDto) {
+  async update(id: string, updateTeamDto: UpdateTeamDto) {
     try {
       if (!id || id == null || id == undefined) {
         throw new HttpException(
@@ -253,7 +253,7 @@ export class ManagerService {
           HttpStatus.EXPECTATION_FAILED,
         );
       } else {
-        const getExistingData = await this.managerRepository.findOne({
+        const getExistingData = await this.TeamRepository.findOne({
           where: { id },
         });
         if (!getExistingData && getExistingData == null) {
@@ -262,9 +262,9 @@ export class ManagerService {
             HttpStatus.NOT_FOUND,
           );
         } else {
-          const updateData = await this.managerRepository.update(
+          const updateData = await this.TeamRepository.update(
             { id: getExistingData?.id },
-            { ...updateManagerDto },
+            { ...updateTeamDto },
           );
           // console.log({ updateData });
 
@@ -275,7 +275,7 @@ export class ManagerService {
             );
           } else {
             const responseData = {
-              message: 'Manager updated successfully',
+              message: 'Team updated successfully',
               data: updateData,
             };
             return responseData;
@@ -297,7 +297,7 @@ export class ManagerService {
           HttpStatus.EXPECTATION_FAILED,
         );
       } else {
-        const findDataToDelete = await this.managerRepository.findOne({
+        const findDataToDelete = await this.TeamRepository.findOne({
           where: { id },
         });
         if (!findDataToDelete) {
@@ -306,7 +306,7 @@ export class ManagerService {
             HttpStatus.EXPECTATION_FAILED,
           );
         } else {
-          const deleteData = await this.managerRepository.softRemove(
+          const deleteData = await this.TeamRepository.softRemove(
             findDataToDelete,
           );
 
@@ -317,7 +317,7 @@ export class ManagerService {
             );
           } else {
             const responseData = {
-              message: 'Manager   deleted successfully',
+              message: 'Team   deleted successfully',
               data: deleteData,
             };
             return responseData;

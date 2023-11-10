@@ -5,13 +5,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { IamModule } from './iam/iam.module';
-import { ManagerModule } from './manager/manager.module';
+import { TeamModule } from './team/team.module';
 import { OrganizerModule } from './organizer/organizer.module';
 import { ProgrammeModule } from './programme/programme.module';
 import { ParticipantModule } from './participant/participant.module';
 import * as Yup from 'yup';
 import { CheckincheckoutTokenModule } from './checkincheckout-token/checkincheckout-token.module';
-import { ManagerUserModule } from './manager-user/manager-user.module';
+import { TeamUserModule } from './team-user/team-user.module';
+import { ComponentsModule } from './components/components.module';
 
 @Module({
   imports: [
@@ -55,12 +56,13 @@ import { ManagerUserModule } from './manager-user/manager-user.module';
       }),
     }),
     IamModule,
-    ManagerModule,
+    TeamModule,
     OrganizerModule,
     ProgrammeModule,
     ParticipantModule,
     CheckincheckoutTokenModule,
-    ManagerUserModule,
+    TeamUserModule,
+    ComponentsModule
   ],
   controllers: [AppController],
   providers: [AppService],

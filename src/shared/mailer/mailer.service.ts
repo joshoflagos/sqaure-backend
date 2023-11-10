@@ -20,4 +20,5 @@ export class MailerService {
       throw new Error(error);
     }
   }
+
 }

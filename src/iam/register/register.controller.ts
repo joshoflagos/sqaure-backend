@@ -11,7 +11,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { AuthType } from '../login/enums/auth-type.enum';
 import { AuthGuard } from '../login/decorators/auth-guard.decorator';
 import { RegisterOrganizerUserDto } from './dto/register-organizer-user.dto';
-import { RegisterManagerUserDto } from './dto/register-manager-user.dto';
+import { RegisterTeamUserDto } from './dto/register-team-user.dto';
 
 @ApiTags('auth')
 @AuthGuard(AuthType.None)
@@ -21,7 +21,7 @@ export class RegisterController {
 
   @Post()
   public async register(
-    @Body() registerUserDto: RegisterManagerUserDto,
+    @Body() registerUserDto: RegisterTeamUserDto,
   ): Promise<any> {
     try {
       await this.registerService.register(registerUserDto);
