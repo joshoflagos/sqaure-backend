@@ -33,11 +33,11 @@ export class CreateParticipantDto {
   @IsOptional()
   bank_account_number: string;
 
-  @IsOptional()
-  check_in: number;
+@IsOptional()
+  attendance_pin: number;
 
   @IsOptional()
-  check_out: number;
+  attendance_selfie: string;
 
   @IsOptional()
   bank_name: string;

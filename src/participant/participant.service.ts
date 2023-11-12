@@ -32,9 +32,7 @@ export class ParticipantService {
       }
       // createParticipantDto.organizer_user = getUser;
       createParticipantDto.programme = getProgramme;
-      createParticipantDto.check_in =
-        this.checkinoutTokenService.generateRandom4DigitNumber();
-      createParticipantDto.check_out =
+      createParticipantDto.attendance_pin =
         this.checkinoutTokenService.generateRandom4DigitNumber();
       const create =
         this.participantRepository.create(createParticipantDto);
@@ -114,13 +112,9 @@ IDEA INT ${getProgramme.team[0].team_address}<br>
       const getall = await this.participantRepository.find({
         where: { programme: { id: programmeId } },
         relations: { programme: true },
-        order: { created_at: 'DESC' },
+        order: { surname: 'ASC' },
       });
-      if (!getall) {
-        throw new HttpException('No data available', HttpStatus.BAD_REQUEST);
-      } else {
-        return getall;
-      }
+   
     } catch (error) {
       throw new HttpException(error, HttpStatus.BAD_REQUEST);
     }
@@ -252,11 +246,11 @@ IDEA INT ${getProgramme.team[0].team_address}<br>
             if (checkExisting) {
               null
             } else {
-              const check_in =
+              const attendance_pin =
                 this.checkinoutTokenService.generateRandom4DigitNumber();
               const check_out =
                 this.checkinoutTokenService.generateRandom4DigitNumber();
-              const participant = this.participantRepository.create({ email: record?.email, programme: programme, check_in: check_in, check_out: check_out })
+              const participant = this.participantRepository.create({ email: record?.email, programme: programme, attendance_pin: attendance_pin })
               const savedParticipant = await this.participantRepository.save(participant);
 
               const html = `

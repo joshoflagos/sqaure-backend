@@ -48,10 +48,10 @@ export class Participant {
   programme: Programme;
 
   @Column({nullable:true})
-  check_in: number;
+  attendance_pin: number;
 
-  @Column({nullable:true})
-  check_out: number;
+  @Column({nullable:true,default:''})
+  attendance_selfie: string;
 
   @CreateDateColumn()
   created_at: Date;
