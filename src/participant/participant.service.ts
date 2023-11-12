@@ -114,7 +114,7 @@ IDEA INT ${getProgramme.team[0].team_address}<br>
         relations: { programme: true },
         order: { surname: 'ASC' },
       });
-   
+   return getall
     } catch (error) {
       throw new HttpException(error, HttpStatus.BAD_REQUEST);
     }
