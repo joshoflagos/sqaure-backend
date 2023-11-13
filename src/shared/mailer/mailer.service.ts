@@ -9,7 +9,7 @@ export class MailerService {
   async sendMail(options: any) {
     try {
       const data = await this.resend.emails.send({
-        from: 'Square CRM <noreply@audstack.com>',
+        from: 'IDEA INT <noreply@audstack.com>',
         to: [options.email],
         subject: options.subject,
         html: options.html,

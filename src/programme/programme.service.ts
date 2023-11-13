@@ -19,7 +19,7 @@ export class ProgrammeService {
     private readonly TeamService: TeamService,
     private readonly organizerService: OrganizerService,
     private readonly organizerUserService: OrganizerUserService,
-  ) {}
+  ) { }
   async create(createProgrammeDto: CreateProgrammeDto) {
     try {
       const getUser = await this.organizerUserService.findById(
@@ -47,6 +47,13 @@ export class ProgrammeService {
               HttpStatus.BAD_REQUEST,
             );
           } else {
+            // Assume you receive a date string from the frontend
+            const startDateStringFromFrontend = createProgrammeDto.start_date;
+            const startDateTime = new Date(startDateStringFromFrontend);
+            createProgrammeDto.start_date = startDateTime
+            const endDateStringFromFrontend = createProgrammeDto.end_date;
+            const endDateTime = new Date(endDateStringFromFrontend);
+            createProgrammeDto.end_date = endDateTime
             createProgrammeDto.organizer_user = getUser;
             createProgrammeDto.organizer = getOrganizer;
             createProgrammeDto.team = getTeam;
@@ -113,7 +120,7 @@ export class ProgrammeService {
         // console.log({ counts });
 
         // const count = await this.countParticipant(programIds);
-        return { getall, counts }; 
+        return { getall, counts };
       }
     } catch (error) {
       // console.log({ error });
@@ -164,7 +171,7 @@ export class ProgrammeService {
       } else {
         const getOne = await this.programmeRepository.findOne({
           where: { id },
-          relations: { organizer_user: true,team:true },
+          relations: { organizer_user: true, team: true },
         });
         // console.log({ getOne });
 
@@ -283,6 +290,13 @@ export class ProgrammeService {
           //  getExistingData.team = updateProgrammeDto.team;
           //  getExistingData.organizer = updateProgrammeDto.organizer;
           //  getExistingData.organizer_user;
+          // Assume you receive a date string from the frontend
+          const startDateStringFromFrontend = updateProgrammeDto.start_date;
+          const startDateTime = new Date(startDateStringFromFrontend);
+          updateProgrammeDto.start_date = startDateTime
+          const endDateStringFromFrontend = updateProgrammeDto.end_date;
+          const endDateTime = new Date(endDateStringFromFrontend);
+          updateProgrammeDto.end_date = endDateTime
           const updateData = await this.programmeRepository.update(
             { id: getExistingData?.id },
             { ...updateProgrammeDto },

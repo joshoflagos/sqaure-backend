@@ -5,7 +5,7 @@ import { UpdateComponentsDto } from './dto/update-components.dto';
 import { AuthGuard } from 'src/iam/login/decorators/auth-guard.decorator';
 import { AuthType } from 'src/iam/login/enums/auth-type.enum';
 import { FileInterceptor } from '@nestjs/platform-express';
-
+  @AuthGuard(AuthType.Bearer)
 @Controller('components')
 export class ComponentsController {
   constructor(private readonly componentsService: ComponentsService) {}
@@ -33,7 +33,7 @@ export class ComponentsController {
   }
 
 
-  @AuthGuard(AuthType.Bearer)
+
   @Post('/import-csv')
   @UseInterceptors(FileInterceptor('file'))
   async importCSV(

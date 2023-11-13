@@ -13,6 +13,7 @@ import * as Yup from 'yup';
 import { CheckincheckoutTokenModule } from './checkincheckout-token/checkincheckout-token.module';
 import { TeamUserModule } from './team-user/team-user.module';
 import { ComponentsModule } from './components/components.module';
+import { AttendanceModule } from './attendance/attendance.module';
 
 @Module({
   imports: [
@@ -62,7 +63,8 @@ import { ComponentsModule } from './components/components.module';
     ParticipantModule,
     CheckincheckoutTokenModule,
     TeamUserModule,
-    ComponentsModule
+    ComponentsModule,
+    AttendanceModule
   ],
   controllers: [AppController],
   providers: [AppService],

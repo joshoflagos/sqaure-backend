@@ -23,10 +23,11 @@ export class Programme {
   name: string;
   @Column({nullable:true})
   work_order_id: string;
-  @Column()
-  start_date: string;
-  @Column()
-  end_date: string;
+  @Column({nullable:true})
+  start_date: Date;
+  @Column({nullable:true})
+  end_date: Date;
+
   @Column({ nullable: true, default: 0 })
   participant_allowance: string;
   @Column({ nullable: true, default: 0 })

@@ -10,9 +10,9 @@ export class CreateProgrammeDto {
   @IsOptional()
   work_order_id: string;
   @IsOptional()
-  start_date: string;
+  start_date: Date;
   @IsOptional()
-  end_date: string;
+  end_date: Date;
   @IsOptional()
   participant_allowance: string;
   @IsOptional()

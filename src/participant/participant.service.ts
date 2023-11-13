@@ -60,16 +60,10 @@ export class ParticipantService {
 <ul>
     <li>Date: ${getProgramme.start_date}</li>
     <li>Location: ${getProgramme.venue}</li>
+    <li>Attendance Pin: ${savetoDb.attendance_pin}</li>
 </ul> 
 
-<p>To secure your spot at ${getProgramme.name}, please follow these simple registration steps:</p>
-<ol>
-<li>Visit our event registration page at <a href="https://ideaint.com.ng/p/register/${savetoDb.id}">Register</a>.</li>
-<li>Fill out the registration form with your details, including your name, contact information, and any other requested information.</li>
-<li>Click on the "Register Now" button.</li>
-</ol>
 
-<p>Please note that registration is on a first-come, first-served basis, so we encourage you to register as soon as possible to secure your place at the event. If you have any questions or encounter any issues during the registration process, please feel free to contact our dedicated support team at <a href="mailto:[Support Email/Phone]">[Support Email/Phone]</a>.</p>
 
 <p>We look forward to welcoming you to ${getProgramme.name} and sharing a memorable experience with you. Don't miss out on this opportunity to <em>[mention any exclusive perks or special features of the event]</em>.</p>
 
@@ -106,7 +100,6 @@ IDEA INT ${getProgramme.team[0].team_address}<br>
     return `This action returns all participant`;
   }
 
-
   async findAllByProgrammeId(programmeId: string) {
     try {
       const getall = await this.participantRepository.find({
@@ -114,7 +107,7 @@ IDEA INT ${getProgramme.team[0].team_address}<br>
         relations: { programme: true },
         order: { surname: 'ASC' },
       });
-   return getall
+      return getall
     } catch (error) {
       throw new HttpException(error, HttpStatus.BAD_REQUEST);
     }
@@ -132,6 +125,27 @@ IDEA INT ${getProgramme.team[0].team_address}<br>
       if (!getOne) {
         throw new HttpException(
           `No data availabe for this id ${id}`,
+          HttpStatus.NOT_FOUND,
+        );
+      }
+      return getOne;
+
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.BAD_GATEWAY);
+    }
+  }
+
+  async findOneByPin(attendance_pin: number) {
+    try {
+
+      const getOne = await this.participantRepository.findOne({
+        where: { attendance_pin },
+        relations: { programme: true },
+      });
+
+      if (!getOne) {
+        throw new HttpException(
+          `No reservation found with the pin ${attendance_pin}`,
           HttpStatus.NOT_FOUND,
         );
       }
@@ -269,16 +283,17 @@ IDEA INT ${getProgramme.team[0].team_address}<br>
     <ul>
     <li>Date: ${programme.start_date}</li> 
     <li>Location: ${programme.venue}</li>
+    <li>Attendance Pin: ${savedParticipant.attendance_pin}</li>
     </ul>
 
-    <p>To secure your spot at ${programme.name}, please follow these simple registration steps:</p>
+    <p>To secure your spot at ${programme.name}, keep your attendance pin secured as it will be required for attendance. Please follow these simple registration steps:</p>
     <ol>
-        <li>Visit our event registration page at <a href="https://ideaint.com.ng/p/register/${participant.id}">Register</a>.</li>
+        <li>Visit our event registration page at <a href="https://app.ideaint.com.ng/p/register/${participant.id}">Register</a>.</li>
         <li>Fill out the registration form with your details, including your name, contact information, and any other requested information.</li>
         <li>Click on the "Register Now" button.</li>
     </ol>
 
-    <p>Please note that registration is on a first-come, first-served basis, so we encourage you to register as soon as possible to secure your place at the event. If you have any questions or encounter any issues during the registration process, please feel free to contact our dedicated support team at <a href="mailto:[Support Email/Phone]">[Support Email/Phone]</a>.</p>
+    
 
     <p>We look forward to welcoming you to ${programme.name} and sharing a memorable experience with you. Don't miss out on this opportunity to <em>[mention any exclusive perks or special features of the event]</em>.</p>
 
@@ -300,7 +315,7 @@ IDEA INT ${getProgramme.team[0].team_address}<br>
               };
 
               await this.mailerService.sendMail(options);
-            }
+            } 
 
 
             return {

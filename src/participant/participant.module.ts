@@ -20,5 +20,6 @@ import { MailerModule } from 'src/shared/mailer/mailer.module';
   ],
   controllers: [ParticipantController],
   providers: [ParticipantService],
+  exports:[ParticipantService]
 })
 export class ParticipantModule { }
