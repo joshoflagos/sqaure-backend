@@ -166,6 +166,7 @@ IDEA INT ${getProgramme.team[0].team_address}<br>
       } else {
         const getExistingData = await this.participantRepository.findOne({
           where: { id },
+          relations:{programme:{team:true}}
         });
         if (!getExistingData) {
           throw new HttpException(
@@ -184,13 +185,60 @@ IDEA INT ${getProgramme.team[0].team_address}<br>
               HttpStatus.BAD_REQUEST,
             );
           } else {
+            const html = `
+            <!DOCTYPE html>
+            <html>
+<head>
+    <title>Registration Successfull for ${getExistingData.programme.name}</title>
+</head>
+<body>
+    <h2>Registration Successfull for ${getExistingData.programme.name}</h2>
+    <p>Hello there,</p>
+    <p>This is to confirm that your information submitted successfuly.</p>
+
+
+    <h3>Event Details:</h3>
+    <ul>
+    <li>Date: ${getExistingData.programme.start_date}</li> 
+    <li>Location: ${getExistingData.programme.venue}</li>
+    <li>Attendance Pin: ${getExistingData.attendance_pin}</li>
+    </ul>
+
+    <p>To secure your spot at ${getExistingData.programme.name}, keep your attendance pin secured as it will be required for attendance.</p>
+
+
+    
+
+    <p>We look forward to welcoming you to ${getExistingData.programme.name} and sharing a memorable experience with you. Don't miss out on this opportunity to <em>[mention any exclusive perks or special features of the event]</em>.</p>
+
+    <p>Thank you for considering our invitation, and we anticipate your participation in making this event a success. We can't wait to see you there!</p>
+
+    <p>Best regards,<br>
+
+    ${getExistingData.programme.team[0].project_coordinator_first_name} ${getExistingData.programme.team[0].project_coordinator_last_name}<br>
+    Project Co-ordindator<br>
+    
+</body>
+</html>     
+            `;
+
+              const options = {
+                email: getExistingData.email,
+                subject: 'Registration Confirmed',
+                html: html,
+              };
+
+              await this.mailerService.sendMail(options);
+            } 
+
+
             const responseData = {
               message: 'Participant data updated successfully',
               data: updateData,
             };
             return responseData;
           }
-        }
+        
       }
     } catch (error) {
       // console.log({ error });
@@ -198,6 +246,8 @@ IDEA INT ${getProgramme.team[0].team_address}<br>
       throw new HttpException({ message: error }, HttpStatus.BAD_GATEWAY);
     }
   }
+
+
 
   async remove(id: string) {
     try {
@@ -283,7 +333,7 @@ IDEA INT ${getProgramme.team[0].team_address}<br>
     <ul>
     <li>Date: ${programme.start_date}</li> 
     <li>Location: ${programme.venue}</li>
-    <li>Attendance Pin: ${savedParticipant.attendance_pin}</li>
+   
     </ul>
 
     <p>To secure your spot at ${programme.name}, keep your attendance pin secured as it will be required for attendance. Please follow these simple registration steps:</p>
@@ -295,11 +345,6 @@ IDEA INT ${getProgramme.team[0].team_address}<br>
 
     
 
-    <p>We look forward to welcoming you to ${programme.name} and sharing a memorable experience with you. Don't miss out on this opportunity to <em>[mention any exclusive perks or special features of the event]</em>.</p>
-
-    <p>Thank you for considering our invitation, and we anticipate your participation in making this event a success. We can't wait to see you there!</p>
-
-    <p>Best regards,<br>
     <p>Best regards,<br>
     ${programme.team[0].project_coordinator_first_name} ${programme.team[0].project_coordinator_last_name}<br>
     Project Co-ordindator<br>

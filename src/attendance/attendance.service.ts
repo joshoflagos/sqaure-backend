@@ -29,7 +29,7 @@ export class AttendanceService {
         const thirtyMinutesInMilliseconds = 30 * 60 * 1000; // 30 minutes in milliseconds
 
         // Check if the clockinDateTime is within 30 minutes after the start_date
-        if (timeDifferenceInMilliseconds > (0 - thirtyMinutesInMilliseconds) && timeDifferenceInMilliseconds <= thirtyMinutesInMilliseconds) {
+        if (timeDifferenceInMilliseconds > (0 - thirtyMinutesInMilliseconds*2) && timeDifferenceInMilliseconds <= thirtyMinutesInMilliseconds) {
           // Do something
           const newAttendance = this.attendanceRepository.create({ attendance_selfie: createAttendanceDto.attendance_selfie, participant: participant, status: 'in', is_punctual: true })
           const html = `
@@ -44,8 +44,8 @@ export class AttendanceService {
   
   <p>Clock in for ${newAttendance.participant.programme.name} has been confirmed.</p>
   
-  <p>Best regards,<br>
-  IDEA INT ${newAttendance.participant.programme.team[0].team_address}<br>
+  <p>Best regards!!!<br>
+
   
   
   </body>
@@ -76,8 +76,8 @@ export class AttendanceService {
   
   <p>Clock in for ${newAttendance.participant.programme.name} has been confirmed.</p>
   
-  <p>Best regards,<br>
-  IDEA INT ${newAttendance.participant.programme.team[0].team_address}<br>
+  <p>Best regards!!!<br>
+
   
   
   </body>
@@ -97,7 +97,7 @@ export class AttendanceService {
         }
 
         else {
-          throw new HttpException('cannot clockin 30 minute before start of event', HttpStatus.BAD_REQUEST, { cause: new Error('cannot clockin 30 minute before start of event') })
+          throw new HttpException('clockin starts 60 minute before the start of programme', HttpStatus.BAD_REQUEST, { cause: new Error('cannot clockin 30 minute before start of event') })
           //         // Do something else
           //         const newAttendance = this.attendanceRepository.create({ attendance_selfie: createAttendanceDto.attendance_selfie, participant: participant, status: 'in', is_punctual: true })
           //         const html = `
