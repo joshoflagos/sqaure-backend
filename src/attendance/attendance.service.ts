@@ -29,7 +29,7 @@ export class AttendanceService {
         const thirtyMinutesInMilliseconds = 30 * 60 * 1000; // 30 minutes in milliseconds
 
         // Check if the clockinDateTime is within 30 minutes after the start_date
-        if (timeDifferenceInMilliseconds > (0 - thirtyMinutesInMilliseconds*2) && timeDifferenceInMilliseconds <= thirtyMinutesInMilliseconds) {
+        if (timeDifferenceInMilliseconds > (0 - thirtyMinutesInMilliseconds * 2) && timeDifferenceInMilliseconds <= thirtyMinutesInMilliseconds) {
           // Do something
           const newAttendance = this.attendanceRepository.create({ attendance_selfie: createAttendanceDto.attendance_selfie, participant: participant, status: 'in', is_punctual: true })
           const html = `
@@ -40,14 +40,15 @@ export class AttendanceService {
   </head>
   <body>
   <h2>Clock in confirmed</h2>
-  <p>Dear ${newAttendance.participant.firstname},</p>
+  <p>${newAttendance.participant.surname} ${newAttendance.participant.firstname} ${newAttendance.participant.lastname} (${newAttendance.participant.gender.toUpperCase()})</p>
   
-  <p>Clock in for ${newAttendance.participant.programme.name} has been confirmed.</p>
+  <p>Program: ${newAttendance.participant.programme.name}.</p>
   
-  <p>Best regards!!!<br>
-
+  <p>Clocked in at: ${clockinDateTime}.</p>
   
-  
+  <p>Status: Punctual.</p>
+  <br/>
+  <p>Please note that late comers will get a 50% slash in allowance<br>
   </body>
   </html>     
         `;
@@ -72,14 +73,15 @@ export class AttendanceService {
   </head>
   <body>
   <h2>Clock in confirmed</h2>
-  <p>Dear ${newAttendance.participant.firstname},</p>
+  <p>${newAttendance.participant.surname} ${newAttendance.participant.firstname} ${newAttendance.participant.lastname} (${newAttendance.participant.gender.toUpperCase()})</p>
   
-  <p>Clock in for ${newAttendance.participant.programme.name} has been confirmed.</p>
+  <p>Program: ${newAttendance.participant.programme.name}.</p>
   
-  <p>Best regards!!!<br>
-
+  <p>Clocked in at: ${clockinDateTime}.</p>
   
-  
+  <p>Status: Punctual.</p>
+  <br/>
+  <p>Please note that late comers will get a 50% slash in allowance<br>
   </body>
   </html>     
         `;
@@ -146,9 +148,9 @@ export class AttendanceService {
   async clockout(updateAttendanceDto: UpdateAttendanceDto) {
     try {
       const participant = await this.participantService.findOneByPin(updateAttendanceDto.attendance_pin)
-      const clockinDateTime = new Date(); // Replace this with your actual clockinDateTime
+      const clockoutDateTime = new Date(); // Replace this with your actual clockoutDateTime
       const endDateTime = participant.programme.end_date;
-      const timeDifferenceInMilliseconds = clockinDateTime.getTime() - endDateTime.getTime();
+      const timeDifferenceInMilliseconds = clockoutDateTime.getTime() - endDateTime.getTime();
 
       const oneMinutesInMilliseconds = 1 * 60 * 1000; // 1 minutes in milliseconds
 
@@ -162,15 +164,14 @@ export class AttendanceService {
   <title>Clock out confirmed</title>
   </head>
   <body>
-  <h2>Clock out confirmed</h2>
-  <p>Dear ${attendance.participant.firstname},</p>
+  <h2>Clock in confirmed</h2>
+  <p>${attendance.participant.surname} ${attendance.participant.firstname} ${attendance.participant.lastname} (${attendance.participant.gender.toUpperCase()})</p>
   
-  <p>Clock out for ${attendance.participant.programme.name} has been confirmed.</p>
+  <p>Program: ${attendance.participant.programme.name}.</p>
   
-  <p>Best regards!!!<br>
+  <p>Clocked out at: ${clockoutDateTime}.</p>
+  
 
-  
-  
   </body>
   </html>     
         `;
