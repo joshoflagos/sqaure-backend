@@ -32,7 +32,7 @@ export class AttendanceController {
   }))
   clockin(@UploadedFile() file: FileUpload, @Body() createAttendanceDto: CreateAttendanceDto) {
     const pin = createAttendanceDto.attendance_pin; // Assuming 'pin' is a property in CreateAttendanceDto
-    const filePath = file ? `documents/images/${pin}-selfie.png` : null;
+    const filePath = file ? file.path : null;
 
     // Now you can save the file path along with other attendance details
     return this.attendanceService.clockin({ ...createAttendanceDto, attendance_selfie: filePath });

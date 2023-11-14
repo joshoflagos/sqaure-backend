@@ -49,6 +49,8 @@ export class AttendanceService {
   <p>Status: Punctual.</p>
   <br/>
   <p>Please note that late comers will get a 50% slash in allowance<br>
+
+  <p>IDEA INT ${newAttendance.participant.programme.team[0].team_address}</p>
   </body>
   </html>     
         `;
@@ -82,6 +84,8 @@ export class AttendanceService {
   <p>Status: Punctual.</p>
   <br/>
   <p>Please note that late comers will get a 50% slash in allowance<br>
+
+  <p>IDEA INT ${newAttendance.participant.programme.team[0].team_address}</p>
   </body>
   </html>     
         `;
@@ -164,13 +168,15 @@ export class AttendanceService {
   <title>Clock out confirmed</title>
   </head>
   <body>
-  <h2>Clock in confirmed</h2>
+  <h2>Clock out confirmed</h2>
   <p>${attendance.participant.surname} ${attendance.participant.firstname} ${attendance.participant.lastname} (${attendance.participant.gender.toUpperCase()})</p>
   
   <p>Program: ${attendance.participant.programme.name}.</p>
   
   <p>Clocked out at: ${clockoutDateTime}.</p>
-  
+  <p>Please note that late comers will get a 50% slash in allowance<br>
+
+  <p>IDEA INT ${attendance.participant.programme.team[0].team_address}</p>
 
   </body>
   </html>     
@@ -207,7 +213,7 @@ export class AttendanceService {
 
   async findOne(participantId: string) {
     try {
-      return await this.attendanceRepository.findOne({ where: { participant: { id: participantId }, }, relations: { participant: { programme: true } } });
+      return await this.attendanceRepository.findOne({ where: { participant: { id: participantId }, }, relations: { participant: { programme: {team:true} } } });
     } catch (error) {
       throw new HttpException('cannot get attendance', HttpStatus.BAD_REQUEST, { cause: new Error(error) })
     }

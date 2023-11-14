@@ -140,7 +140,7 @@ IDEA INT ${getProgramme.team[0].team_address}<br>
 
       const getOne = await this.participantRepository.findOne({
         where: { attendance_pin },
-        relations: { programme: true },
+        relations: { programme: {team:true} },
       });
 
       if (!getOne) {
