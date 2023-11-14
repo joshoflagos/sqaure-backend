@@ -1,10 +1,10 @@
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty, IsOptional } from "class-validator";
 
 export class CreateAttendanceDto {
 
     @IsNotEmpty()
     attendance_pin: any;
 
-    @IsNotEmpty()
+    @IsOptional()
     attendance_selfie: string;
 }

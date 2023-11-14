@@ -6,14 +6,16 @@ import { Attendance } from './entities/attendance.entity';
 import { ProgrammeModule } from 'src/programme/programme.module';
 import { MailerModule } from 'src/shared/mailer/mailer.module';
 import { ParticipantModule } from 'src/participant/participant.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Attendance]),
     ProgrammeModule,
     MailerModule,
-    ParticipantModule
-  ],
+    ParticipantModule,
+    
+    ],
   controllers: [AttendanceController],
   providers: [AttendanceService]
 })

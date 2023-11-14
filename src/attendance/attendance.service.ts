@@ -213,4 +213,12 @@ export class AttendanceService {
     }
   }
 
+  async findByPin(attendancePin: number) {
+    try {
+      return await this.attendanceRepository.findOne({ where: { participant: { attendance_pin: attendancePin }, } });
+    } catch (error) {
+      throw new HttpException('cannot get attendance', HttpStatus.BAD_REQUEST, { cause: new Error(error) })
+    }
+  }
+
 }
