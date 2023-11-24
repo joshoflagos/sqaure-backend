@@ -8,3 +8,4 @@ export class CreateAttendanceDto {
     @IsOptional()
     attendance_selfie: string;
 }
+ 

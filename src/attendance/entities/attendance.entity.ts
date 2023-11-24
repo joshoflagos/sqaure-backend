@@ -1,11 +1,11 @@
 import { Participant } from "src/participant/entities/participant.entity";
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class Attendance {
     @PrimaryGeneratedColumn('uuid')
     id: string;
-    @OneToOne(() => Participant, (participant) => participant)
+    @ManyToOne(() => Participant, (participant) => participant)
     @JoinColumn()
     participant: Participant;
 
@@ -23,6 +23,5 @@ export class Attendance {
 
     @UpdateDateColumn()
     clock_out_time: Date;
-
 
 }
