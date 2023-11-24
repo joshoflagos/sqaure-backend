@@ -54,23 +54,26 @@ export class ParticipantService {
 <h2>Registration Invitation for ${getProgramme.name}</h2>
 <p>Dear ${savetoDb.firstname},</p>
 
-<p>We hope this message finds you well. We are thrilled to invite you to the upcoming ${getProgramme.name} that promises to be an exciting and enriching experience.</p>
+<p>You are hereby invited to the event themed, ${getProgramme.name} organized by international IDEA.</p>
 
-<h3>Event Details:</h3>
+
 <ul>
-    <li>Date: ${getProgramme.start_date}</li>
-    <li>Location: ${getProgramme.venue}</li>
+    <li>Date of activity:    ${getProgramme.start_date.toLocaleDateString()} - ${getProgramme.end_date.toLocaleDateString()}</li>
+    <li>Start time:          ${getProgramme.start_date.toLocaleTimeString()}</li>
+    <li>End time:            ${getProgramme.end_date.toLocaleTimeString()}</li>
     <li>Attendance Pin: ${savetoDb.attendance_pin}</li>
 </ul> 
 
 
+<p>Kindly click on this <a href="https://app.ideaint.com.ng/p/register/${savetoDb.id}">LINK.</a> to fill your details for the purpose of registration and attendance for maximum planning, processing of travel stipend, reimbursement, etc. </p>
 
-<p>We look forward to welcoming you to ${getProgramme.name} and sharing a memorable experience with you. Don't miss out on this opportunity to <em>[mention any exclusive perks or special features of the event]</em>.</p>
+<p>Thank you for your anticipated cooperation</p>
 
-<p>Thank you for considering our invitation, and we anticipate your participation in making this event a success. We can't wait to see you there!</p>
-
-<p>Best regards,<br>
-IDEA INT ${getProgramme.team[0].team_address}<br>
+<p>Regards,<br>
+<div>For: <b>International IDEA Nigeria</b></div>
+<div>Implementing the Rule of Law & Corruption <b>(RoLAC II)</b></div>
+<div>Funded by the European Union <b>(EU)</b></div>
+<br>
 
 
 </body>
@@ -321,36 +324,36 @@ IDEA INT ${getProgramme.team[0].team_address}<br>
             <!DOCTYPE html>
             <html>
 <head>
-    <title>Registration Invitation for ${programme.name}</title>
+<title>Registration Invitation for ${programme.name}</title>
 </head>
 <body>
-    <h2>Registration Invitation for ${programme.name}</h2>
-    <p>Hello there,</p>
+<h2>Registration Invitation for ${programme.name}</h2>
+<p>Dear ${savedParticipant.firstname},</p>
 
-    <p>We hope this message finds you well. We are thrilled to invite you to the upcoming ${programme.name} that promises to be an exciting and enriching experience. This event is a fantastic opportunity for you to <em>[briefly describe the event's key benefits or highlights]</em>.</p>
+<p>You are hereby invited to the event themed, ${programme.name} organized by international IDEA.</p>
 
-    <h3>Event Details:</h3>
-    <ul>
-    <li>Date: ${programme.start_date}</li> 
-    <li>Location: ${programme.venue}</li>
-   
-    </ul>
 
-    <p>To secure your spot at ${programme.name}, keep your attendance pin secured as it will be required for attendance. Please follow these simple registration steps:</p>
-    <ol>
-        <li>Visit our event registration page at <a href="https://app.ideaint.com.ng/p/register/${participant.id}">Register</a>.</li>
-        <li>Fill out the registration form with your details, including your name, contact information, and any other requested information.</li>
-        <li>Click on the "Register Now" button.</li>
-    </ol>
+<ul>
+    <li>Date of activity:    ${programme.start_date.toLocaleDateString()} - ${programme.end_date.toLocaleDateString()}</li>
+    <li>Start time:          ${programme.start_date.toLocaleTimeString()}</li>
+    <li>End time:            ${programme.end_date.toLocaleTimeString()}</li>
+    <li>Attendance Pin: ${savedParticipant.attendance_pin}</li>
+</ul> 
 
-    
 
-    <p>Best regards,<br>
-    ${programme.team[0].project_coordinator_first_name} ${programme.team[0].project_coordinator_last_name}<br>
-    Project Co-ordindator<br>
-    
+<p>Kindly click on this <a href="https://app.ideaint.com.ng/p/register/${savedParticipant.id}">LINK.</a> to fill your details for the purpose of registration and attendance for maximum planning, processing of travel stipend, reimbursement, etc. </p>
+
+<p>Thank you for your anticipated cooperation</p>
+
+<p>Regards,<br>
+<div>For: <b>International IDEA Nigeria</b></div>
+<div>Implementing the Rule of Law & Corruption <b>(RoLAC II)</b></div>
+<div>Funded by the European Union <b>(EU)</b></div>
+<br>
+
+
 </body>
-</html>     
+</html>      
             `;
 
               const options = {

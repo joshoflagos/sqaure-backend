@@ -8,6 +8,7 @@ import { TeamService } from '../team/team.service';
 import { OrganizerService } from 'src/organizer/organizer.service';
 import { OrganizerUserService } from 'src/organizer-user/organizer-user.service';
 import { Participant } from 'src/participant/entities/participant.entity';
+import { MailerService } from 'src/shared/mailer/mailer.service';
 
 @Injectable()
 export class ProgrammeService {
@@ -19,6 +20,8 @@ export class ProgrammeService {
     private readonly TeamService: TeamService,
     private readonly organizerService: OrganizerService,
     private readonly organizerUserService: OrganizerUserService,
+
+    private readonly mailerService: MailerService,
   ) { }
   async create(createProgrammeDto: CreateProgrammeDto) {
     try {
@@ -66,6 +69,48 @@ export class ProgrammeService {
                 HttpStatus.BAD_REQUEST,
               );
             } else {
+              const html = `
+              <!DOCTYPE html>
+              <html>
+  <head>
+  <title>New Event</title>
+  </head>
+  <body>
+  <h2>New Event</h2>
+  <p>Dear ${savetoDb.team[0].administrative_assistant_first_name},</p>
+  
+  <p>This is to nitify you that <b>Reuben Igba</b> has created the event with th following information.</p>
+  
+  
+  <ul>
+      <li>Date of activity:        ${savetoDb.start_date.toLocaleDateString()} - ${savetoDb.end_date.toLocaleDateString()}</li>
+      <li>Work Order ID:           ${savetoDb.work_order_id}</li>
+      <li>Name of activity:        ${savetoDb.name}</li>
+      <li>Component & Sub code:    C1.1
+      <li>Component Lead:          Oluwatoyin Akinwade Badejogbin | Program Manager
+  
+
+  </ul> 
+  
+  
+  
+  <p>Regards,<br>
+  <div>For: <b>International IDEA Nigeria</b> - Project Financial Officer</div>
+  <br>
+  
+  
+  </body>
+  </html>      
+              `;
+              const options = {
+                email: savetoDb.team[0].administrative_assistant_email,
+                subject: 'Invitation',
+                html: html,
+              };
+
+              await this.mailerService.sendMail(options);
+              // savetoDb.team[0].administrative_assistant_email
+  
               const responseData = {
                 message: 'Programmed created successfully',
                 data: savetoDb,

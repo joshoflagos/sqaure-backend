@@ -7,6 +7,7 @@ import { TeamModule } from 'src/team/team.module';
 import { OrganizerModule } from 'src/organizer/organizer.module';
 import { OrganizerUserModule } from 'src/organizer-user/organizer-user.module';
 import { Participant } from 'src/participant/entities/participant.entity';
+import { MailerModule } from 'src/shared/mailer/mailer.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { Participant } from 'src/participant/entities/participant.entity';
     TeamModule,
     OrganizerModule,
     OrganizerUserModule,
+    MailerModule
   ],
   controllers: [ProgrammeController],
   providers: [ProgrammeService],
