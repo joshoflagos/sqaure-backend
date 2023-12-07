@@ -100,12 +100,12 @@ export class RegisterService {
     <!DOCTYPE html>
     <html>
     <head>
-        <title>Welcome to Square CRM for Oganizations</title>
+        <title>Welcome to IDEA INT for Oganizations</title>
     </head>
     <body>
         <p>Hi ${registerOrganizerUserDto.full_name},</p>
     
-        <p>Welcome to Square CRM for Oganizations </p>
+        <p>Welcome to IDEA INT for Oganizations </p>
     
         <p><strong> We help organisations plan and manage their programmes, Teams, participants, attendance, travel and spend records.</strong>
         </p>

@@ -50,19 +50,19 @@ export class TeamService {
         <!DOCTYPE html>
       <html>
       <head>
-          <title>Welcome to Square CRM for Oganizations</title>
+          <title>Welcome to IDEA INT for Oganizations</title>
       </head>
       <body>
           <p>Hi ${createTeamDto.administrative_assistant_first_name}   ${
             createTeamDto.administrative_assistant_last_name
           },</p>
       
-          <p>Welcome to Square CRM for Oganizations </p>
+          <p>Welcome to IDEA INT for Oganizations </p>
       
           <p><strong> We help organisations plan and manage their programmes, Teams, participants, attendance, travel and spend records.</strong>
           </p>
           <p>We help organization manage programmes sponsors, participant, travel and spend record 
-          </p>   <p> I have created an account for you on Square CRM as a Team. You can use this account to access a variety of resources, including adding participant, checking of available programmes.
+          </p>   <p> I have created an account for you on IDEA INT as a Team. You can use this account to access a variety of resources, including adding participant, checking of available programmes.
           </p>
       
           <p><b>To log in to your account, please click on the following link:</b></p>
