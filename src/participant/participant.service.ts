@@ -143,7 +143,7 @@ export class ParticipantService {
 
       const getOne = await this.participantRepository.findOne({
         where: { attendance_pin },
-        relations: { programme: {team:true} },
+        relations: { programme: { team: true } },
       });
 
       if (!getOne) {
@@ -169,7 +169,7 @@ export class ParticipantService {
       } else {
         const getExistingData = await this.participantRepository.findOne({
           where: { id },
-          relations:{programme:{team:true}}
+          relations: { programme: { team: true } }
         });
         if (!getExistingData) {
           throw new HttpException(
@@ -225,23 +225,23 @@ export class ParticipantService {
 </html>     
             `;
 
-              const options = {
-                email: getExistingData.email,
-                subject: 'Registration Confirmed',
-                html: html,
-              };
-
-              await this.mailerService.sendMail(options);
-            } 
-
-
-            const responseData = {
-              message: 'Participant data updated successfully',
-              data: updateData,
+            const options = {
+              email: getExistingData.email,
+              subject: 'Registration Confirmed',
+              html: html,
             };
-            return responseData;
+
+            await this.mailerService.sendMail(options);
           }
-        
+
+
+          const responseData = {
+            message: 'Participant data updated successfully',
+            data: updateData,
+          };
+          return responseData;
+        }
+
       }
     } catch (error) {
       // console.log({ error });
@@ -312,7 +312,8 @@ export class ParticipantService {
             const checkExisting = await this.participantRepository.findOne({ where: { email: record?.email, programme: { id: programmeId } } })
             if (checkExisting) {
               null
-            } else {
+            } 
+            else {
               const attendance_pin =
                 this.checkinoutTokenService.generateRandom4DigitNumber();
               const check_out =
@@ -363,14 +364,15 @@ export class ParticipantService {
               };
 
               await this.mailerService.sendMail(options);
-            } 
+            }
 
 
-            return {
-              message: 'Data imported successfully',
-              status: HttpStatus.OK,
-            };
+           
           }
+          return {
+            message: 'Data imported successfully',
+            status: HttpStatus.OK,
+          };
         });
     } catch (err) {
       console.log(err)
