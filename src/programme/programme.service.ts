@@ -79,7 +79,7 @@ export class ProgrammeService {
   <h2>New Event</h2>
   <p>Dear ${savetoDb.team[0].administrative_assistant_first_name},</p>
   
-  <p>This is to nitify you that <b>Reuben Igba</b> has created the event with th following information.</p>
+  <p>This is to notify you that <b>Reuben Igba</b> has created an event for your team.</p>
   
   
   <ul>
@@ -94,8 +94,11 @@ export class ProgrammeService {
   
   
   
-  <p>Regards,<br>
+  <p>Regards,<br><br>
+  Reuben IGBA
   <div>For: <b>International IDEA Nigeria</b> - Project Financial Officer</div>
+<div>Implementing the Rule of Law & Corruption <b>(RoLAC II)</b></div>
+<div>Funded by the European Union <b>(EU)</b></div>
   <br>
   
   
@@ -110,7 +113,7 @@ export class ProgrammeService {
 
               await this.mailerService.sendMail(options);
               // savetoDb.team[0].administrative_assistant_email
-  
+
               const responseData = {
                 message: 'Programmed created successfully',
                 data: savetoDb,
