@@ -65,7 +65,7 @@ export class ParticipantService {
 </ul> 
 
 
-<p>Kindly click on this <a href="https://app.ideaint.com.ng/p/register/${savetoDb.id}">LINK.</a> to fill your details for the purpose of registration and attendance for maximum planning, processing of travel stipend, reimbursement, etc. </p>
+<p>Kindly click on this <a href="https://app.ideaint.com.ng/p/register/${savetoDb.id}">LINK.</a> to fill your details <b>for the purpose of registration</b> and attendance for maximum planning, processing of travel stipend, reimbursement, etc. </p>
 
 <p>Thank you for your anticipated cooperation</p>
 
@@ -341,7 +341,7 @@ export class ParticipantService {
 </ul> 
 
 
-<p>Kindly click on this <a href="https://app.ideaint.com.ng/p/register/${savedParticipant.id}">LINK.</a> to fill your details for the purpose of registration and attendance for maximum planning, processing of travel stipend, reimbursement, etc. </p>
+<p>Kindly click on this <a href="https://app.ideaint.com.ng/p/register/${savedParticipant.id}">LINK.</a> to fill your details <b>for the purpose of registration</b> and attendance for maximum planning, processing of travel stipend, reimbursement, etc. </p>
 
 <p>Thank you for your anticipated cooperation</p>
 
