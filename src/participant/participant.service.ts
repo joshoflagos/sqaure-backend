@@ -329,7 +329,7 @@ export class ParticipantService {
 </head>
 <body>
 <h2>Registration Invitation for ${programme.name}</h2>
-<p>Dear ${savedParticipant.firstname},</p>
+<p>Hello,</p>
 
 <p>You are hereby invited to the event themed, ${programme.name} organized by international IDEA.</p>
 
@@ -338,7 +338,7 @@ export class ParticipantService {
     <li>Date of activity:    ${programme.start_date.toLocaleDateString()} - ${programme.end_date.toLocaleDateString()}</li>
     <li>Start time:          ${programme.start_date.toLocaleTimeString()}</li>
     <li>End time:            ${programme.end_date.toLocaleTimeString()}</li>
-    <li>Attendance Pin: ${savedParticipant.attendance_pin}</li>
+
 </ul> 
 
 

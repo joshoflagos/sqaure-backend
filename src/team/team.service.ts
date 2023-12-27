@@ -95,7 +95,7 @@ export class TeamService {
           } else {
             const options = {
               email: createTeamDto.administrative_assistant_email,
-              subject: 'Welcome to Square',
+              subject: 'Welcome to IDEA INT',
               html: html,
             };
 
