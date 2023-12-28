@@ -62,4 +62,9 @@ export class AttendanceController {
     return this.attendanceService.findByPin(attendancePin);
   }
 
+  @Get('/report/attendance/:programId')
+  findAllByProgrammeId(@Param('programId') programId: string) {
+    return this.attendanceService.findAllByProgrammeId(programId);
+  }
+
 }

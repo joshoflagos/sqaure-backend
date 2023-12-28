@@ -7,5 +7,8 @@ export class CreateAttendanceDto {
 
     @IsOptional()
     attendance_selfie: string;
+
+    @IsOptional()
+    date?:string;
 }
  

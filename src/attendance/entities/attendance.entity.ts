@@ -5,7 +5,7 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, Prim
 export class Attendance {
     @PrimaryGeneratedColumn('uuid')
     id: string;
-    @ManyToOne(() => Participant, (participant) => participant)
+    @ManyToOne(() => Participant, (participant) => participant.attendance)
     @JoinColumn()
     participant: Participant;
 
@@ -23,5 +23,8 @@ export class Attendance {
 
     @UpdateDateColumn()
     clock_out_time: Date;
+
+    @Column({nullable:true})
+    date:string
 
 }

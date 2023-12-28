@@ -7,9 +7,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Attendance } from 'src/attendance/entities/attendance.entity';
 
 @Entity()
 export class Participant {
@@ -46,6 +48,9 @@ export class Participant {
   @ManyToOne(() => Programme, (programme) => programme, { onDelete: 'SET NULL' })
   @JoinColumn()
   programme: Programme;
+
+  @OneToMany(()=>Attendance,attendance=>attendance.participant,{nullable:true})
+  attendance:Attendance[]
 
   @Column({nullable:true})
   attendance_pin: number;

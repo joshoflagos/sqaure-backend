@@ -107,9 +107,9 @@ export class ParticipantService {
     try {
       const getall = await this.participantRepository.find({
         where: { programme: { id: programmeId } },
-        relations: { programme: true },
+        relations: { programme: true,attendance:true },
         order: { surname: 'ASC' },
-      });
+      }); 
       return getall
     } catch (error) {
       throw new HttpException(error, HttpStatus.BAD_REQUEST);
@@ -122,7 +122,7 @@ export class ParticipantService {
 
       const getOne = await this.participantRepository.findOne({
         where: { id },
-        relations: { programme: true },
+        relations: { programme: true,attendance:true },
       });
 
       if (!getOne) {

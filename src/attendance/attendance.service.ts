@@ -20,7 +20,8 @@ export class AttendanceService {
     try {
 
       const participant = await this.participantService.findOneByPin(createAttendanceDto.attendance_pin)
-      const attendance = await this.findOne(participant.id)
+      const attendance = await this.attendanceRepository.findOne({where:{participant:{id:participant.id},date:new Date().toLocaleDateString()}})
+      console.log(attendance)
       if (!attendance) {
         const clockinDateTime = new Date(); // Replace this with your actual clockinDateTime
         const startDateTime = participant.programme.start_date;
@@ -31,7 +32,7 @@ export class AttendanceService {
         // Check if the clockinDateTime is within 30 minutes after the start_date
         if (timeDifferenceInMilliseconds > (0 - thirtyMinutesInMilliseconds * 2) && timeDifferenceInMilliseconds <= thirtyMinutesInMilliseconds) {
           // Do something
-          const newAttendance = this.attendanceRepository.create({ attendance_selfie: createAttendanceDto.attendance_selfie, participant: participant, status: 'in', is_punctual: true })
+          const newAttendance = this.attendanceRepository.create({ attendance_selfie: createAttendanceDto.attendance_selfie, participant: participant, status: 'in', is_punctual: true,date:new Date().toLocaleDateString() })
           const html = `
         <!DOCTYPE html>
         <html>
@@ -66,7 +67,7 @@ export class AttendanceService {
           // console.log('Clock in occurred within 30 minutes after the program start date.');
         } else if (timeDifferenceInMilliseconds > thirtyMinutesInMilliseconds) {
           // Do something else
-          const newAttendance = this.attendanceRepository.create({ attendance_selfie: createAttendanceDto.attendance_selfie, participant: participant, status: 'in', is_punctual: false })
+          const newAttendance = this.attendanceRepository.create({ attendance_selfie: createAttendanceDto.attendance_selfie, participant: participant, status: 'in', is_punctual: false,date:new Date().toLocaleDateString() })
           const html = `
         <!DOCTYPE html>
         <html>
@@ -207,13 +208,14 @@ export class AttendanceService {
     }
   }
 
-  findAll() {
-    return `This action returns all attendance`;
+  async findAllByProgrammeId(programmeId: string) {
+    const attendance = await this.attendanceRepository.find({ where: { participant: { programme: { id: programmeId } } } })
+    return attendance;
   }
 
   async findOne(participantId: string) {
     try {
-      return await this.attendanceRepository.findOne({ where: { participant: { id: participantId }, }, relations: { participant: { programme: {team:true} } } });
+      return await this.attendanceRepository.findOne({ where: { participant: { id: participantId }, }, relations: { participant: { programme: { team: true } } } });
     } catch (error) {
       throw new HttpException('cannot get attendance', HttpStatus.BAD_REQUEST, { cause: new Error(error) })
     }
