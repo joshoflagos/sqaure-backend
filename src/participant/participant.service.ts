@@ -218,8 +218,11 @@ export class ParticipantService {
 
     <p>Best regards,<br>
 
-    ${getExistingData.programme.team[0].project_coordinator_first_name} ${getExistingData.programme.team[0].project_coordinator_last_name}<br>
-    Project Co-ordindator<br>
+    <p>Regards,<br>
+    <div>For: <b>International IDEA Nigeria</b></div>
+    <div>Implementing the Rule of Law & Corruption <b>(RoLAC II)</b></div>
+    <div>Funded by the European Union <b>(EU)</b></div>
+    <br>
     
 </body>
 </html>     
