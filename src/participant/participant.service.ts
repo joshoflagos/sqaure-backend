@@ -244,7 +244,7 @@ export class ParticipantService {
 
       }
     } catch (error) {
-      // console.log({ error });
+      console.log({ error });
 
       throw new HttpException({ message: error }, HttpStatus.BAD_GATEWAY);
     }
