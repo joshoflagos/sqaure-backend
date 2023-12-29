@@ -67,7 +67,7 @@ export class TeamService {
       
           <p><b>To log in to your account, please click on the following link:</b></p>
           <ul>
-          <li> <a href=${`https://square-inky.vercel.app/crm/Teams/auth/${createTeamDto.auth_link}`}>Click to Login</a></li>
+          <li> <a href=${`https://square-inky.vercel.app/crm/teams/auth/${createTeamDto.auth_link}`}>Click to Login</a></li>
           
   </ul>
       
