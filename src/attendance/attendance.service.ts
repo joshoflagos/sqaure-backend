@@ -51,7 +51,11 @@ export class AttendanceService {
   <br/>
   <p>Please note that late comers will get a 50% slash in allowance<br>
 
-  <p>IDEA INT ${newAttendance.participant.programme.team[0].team_address}</p>
+  <p>Regards,<br>
+    <div>For: <b>International IDEA Nigeria</b></div>
+    <div>Implementing the Rule of Law & Corruption <b>(RoLAC II)</b></div>
+    <div>Funded by the European Union <b>(EU)</b></div>
+    <br>
   </body>
   </html>     
         `;
@@ -86,7 +90,11 @@ export class AttendanceService {
   <br/>
   <p>Please note that late comers will get a 50% slash in allowance<br>
 
-  <p>IDEA INT ${newAttendance.participant.programme.team[0].team_address}</p>
+  <p>Regards,<br>
+    <div>For: <b>International IDEA Nigeria</b></div>
+    <div>Implementing the Rule of Law & Corruption <b>(RoLAC II)</b></div>
+    <div>Funded by the European Union <b>(EU)</b></div>
+    <br>
   </body>
   </html>     
         `;
@@ -177,7 +185,11 @@ export class AttendanceService {
   <p>Clocked out at: ${clockoutDateTime}.</p>
   <p>Please note that late comers will get a 50% slash in allowance<br>
 
-  <p>IDEA INT ${attendance.participant.programme.team[0].team_address}</p>
+  <p>Regards,<br>
+    <div>For: <b>International IDEA Nigeria</b></div>
+    <div>Implementing the Rule of Law & Corruption <b>(RoLAC II)</b></div>
+    <div>Funded by the European Union <b>(EU)</b></div>
+    <br>
 
   </body>
   </html>     
