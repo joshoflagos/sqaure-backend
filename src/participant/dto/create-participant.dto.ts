@@ -45,5 +45,5 @@ export class CreateParticipantDto {
   organization: string;
 
   @IsOptional()
-  programme: any;
+  programme?: any;
 }
