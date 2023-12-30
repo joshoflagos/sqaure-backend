@@ -178,7 +178,7 @@ export class TeamService {
   async findAllByUserId(userId: string) {
     try {
       const getall = await this.TeamRepository.find({
-        where: { organizer_user: { id: userId } },
+        // where: { organizer_user: { id: userId } },
         relations: { organizer_user: true },
         order: { created_at: 'DESC' },
       });
@@ -328,4 +328,4 @@ export class TeamService {
       throw new HttpException({ message: error }, HttpStatus.BAD_REQUEST);
     }
   }
-}
+}      

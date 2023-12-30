@@ -149,7 +149,7 @@ export class ProgrammeService {
   async findAllByUserId(userId: string) {
     try {
       const getall = await this.programmeRepository.find({
-        where: { organizer_user: { id: userId } },
+        // where: { organizer_user: { id: userId } },
         relations: { organizer_user: true, organizer: true, team: true },
         order: { created_at: 'DESC' },
       });
@@ -412,3 +412,4 @@ export class ProgrammeService {
     }
   }
 }
+   
