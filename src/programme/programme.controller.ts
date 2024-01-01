@@ -33,6 +33,12 @@ export class ProgrammeController {
   findOne(@Param('id') id: string) {
     return this.programmeService.findOne(id);
   }
+
+  @Get('/payable/:id')
+  findOnePayable(@Param('id') id: string) {
+    return this.programmeService.findOnePayable(id);
+  }
+
   @Get('/organizer-users/:id')
   findAllByUserId(@Param('id') id: string) {
     return this.programmeService.findAllByUserId(id);

@@ -235,6 +235,8 @@ export class ProgrammeService {
       throw new HttpException(error, HttpStatus.BAD_GATEWAY);
     }
   }
+
+
   async findOne(id: string) {
     try {
       if (id == null || id == undefined) {
@@ -261,6 +263,36 @@ export class ProgrammeService {
       throw new HttpException(error, HttpStatus.BAD_GATEWAY);
     }
   }
+
+  async findOnePayable(id: string) {
+    try {
+      if (id == null || id == undefined) {
+        throw new HttpException(
+          `No  id found ${id}`,
+          HttpStatus.BAD_REQUEST,
+        );
+      } else {
+        const getOne = await this.programmeRepository.findOne({
+          where: { id },
+          relations: { organizer_user: true },
+        });
+        // console.log({ getOne });
+
+        if (!getOne && getOne == null) {
+          throw new HttpException(
+            `No data availabe for this id ${id}`,
+            HttpStatus.NOT_FOUND,
+          );
+        }
+        const payable= parseFloat(getOne.participant_airtime)+parseFloat(getOne.participant_allowance)+(parseFloat(getOne.participant_distance)*parseFloat(getOne.participant_rate))
+        console.log(payable)
+        return {payable:payable};
+      }
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.BAD_GATEWAY);
+    }
+  }
+
   async countParticipantsForPrograms(programs: Programme[]) {
     const programIds = programs.map((program) => program.id);
 

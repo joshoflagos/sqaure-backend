@@ -52,7 +52,7 @@ export class Participant {
   @OneToMany(()=>Attendance,attendance=>attendance.participant,{nullable:true})
   attendance:Attendance[]
 
-  @Column({nullable:true})
+  @Column({nullable:true}) 
   attendance_pin: number;
 
   @Column({nullable:true,default:''})
