@@ -50,7 +50,7 @@ export class Participant {
   programme: Programme;
 
   @OneToMany(()=>Attendance,attendance=>attendance.participant,{nullable:true})
-  attendance:Attendance[]
+  attendance:Attendance[] 
 
   @Column({nullable:true}) 
   attendance_pin: number;

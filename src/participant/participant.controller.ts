@@ -60,4 +60,10 @@ export class ParticipantController {
       throw new HttpException('No file', HttpStatus.NOT_FOUND);
     }
   }
+
+  @AuthGuard(AuthType.None)
+  @Get('/dashboard/:id')
+  public async dashboardMetric(@Param('id') id:string): Promise<any> {
+    return this.participantService.dashboardMetric(id);
+  }
 }

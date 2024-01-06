@@ -386,4 +386,26 @@ export class ParticipantService {
       );
     }
   }
+
+  public async dashboardMetric(id:string): Promise<any> {
+    const participant = await this.participantRepository.find({where:{programme:{id:id}},relations:{attendance:true}});
+
+
+    
+    const invited = participant.length;
+    const registered= participant.filter((dt)=>dt.gender!==null).length
+    const present= participant.filter((dt)=>dt.attendance.length).length
+    const absent= participant.filter((dt)=>!dt.attendance.length).length 
+    const metrics = {
+      absent,
+      present,
+      registered,
+      invited,
+    };
+
+    return {
+      metrics: metrics,
+      status: HttpStatus.OK,
+    };
+  }
 }
