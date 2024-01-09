@@ -42,6 +42,8 @@ export class CreateParticipantDto {
   @IsOptional()
   bank_name: string;
   @IsOptional()
+  bank_code: string;
+  @IsOptional()
   organization: string;
 
   @IsOptional()

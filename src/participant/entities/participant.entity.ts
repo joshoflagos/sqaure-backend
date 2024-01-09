@@ -43,6 +43,8 @@ export class Participant {
   @Column({nullable:true})
   bank_name: string;
   @Column({nullable:true})
+  bank_code: string;
+  @Column({nullable:true})
   organization: string;
 
   @ManyToOne(() => Programme, (programme) => programme, { onDelete: 'SET NULL' })
